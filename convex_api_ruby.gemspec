@@ -5,7 +5,7 @@ require 'convex'
 
 Gem::Specification.new do |spec|
   spec.name          = "convex"
-  spec.version       = VERSION
+  spec.version       = Convex::VERSION
   spec.authors       = ["Billbsing"]
   spec.email         = ["billbsing@gmail.com"]
 
@@ -30,12 +30,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 2.2.18"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "webmock", "~> 2.3.2"
-  spec.add_development_dependency "pry", "~> 0.10.4"
-  spec.add_runtime_dependency 'rbnacl', '~> 4.0.1'
+  spec.add_development_dependency 'bundler', '~> 2.2.18'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'webmock', '~> 2.3.2'
   spec.add_runtime_dependency 'http', '~> 2.2.1'
-  spec.add_runtime_dependency 'addressable', '~> 2.5.0'
+  spec.add_runtime_dependency 'openssl', '~> 2.2.0'
 end
