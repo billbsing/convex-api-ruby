@@ -1,3 +1,8 @@
+
+lib/convex/account_key
+
+# Standard Ruby ignores
+
 *.gem
 *.rbc
 /.config
