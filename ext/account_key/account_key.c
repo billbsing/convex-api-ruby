@@ -1,5 +1,6 @@
 #include "ruby.h"
 #include "extconf.h"
+#include "convex_utils.h"
 #include "account_key.h"
 
 /**
@@ -173,6 +174,55 @@ static VALUE account_create_key_from_text(VALUE module, VALUE text, VALUE passwo
     return klass;
 }
 
+static VALUE convex_account_sign_data(VALUE self, VALUE hash_hex) {
+
+    VALUE result = 0;
+
+    convex_account_p account = NULL;
+    Data_Get_Struct(self, convex_account_t , account);
+    if (!account) {
+        return 0;
+    }
+
+    if (!account->key) {
+      return 0;
+    }
+
+    char *hash_hex_ptr = StringValueCStr(hash_hex);
+    int hash_buffer_size = strlen(hash_hex_ptr) / 2;
+    if ( hash_buffer_size > 1024) {
+        // buffer to big
+        return 0;
+    }
+    unsigned char *hash_buffer = malloc(hash_buffer_size);
+    convex_utils_hex_to_bytes(hash_hex_ptr, hash_buffer, &hash_buffer_size);
+
+
+    size_t sign_length = EVP_PKEY_size(account->key);
+    unsigned char *sign_buffer = malloc(sign_length);
+
+    EVP_PKEY_CTX *key_ctx = NULL;
+    EVP_MD_CTX *ctx = EVP_MD_CTX_new();
+    if (!ctx) {
+        return 0;
+    }
+
+    EVP_DigestSignInit(ctx, &key_ctx, NULL, NULL, account->key);
+    EVP_DigestSign(ctx, sign_buffer, &sign_length, hash_buffer, hash_buffer_size);
+    EVP_MD_CTX_free(ctx);
+    free(hash_buffer);
+
+    int sign_hex_buffer_length = (sign_length * 2) + 1;
+    char *sign_hex_buffer = malloc(sign_hex_buffer_length);
+    convex_utils_bytes_to_hex(sign_buffer, sign_length, sign_hex_buffer, &sign_hex_buffer_length);
+
+    free(sign_buffer);
+    result = rb_str_new_cstr(sign_hex_buffer);
+
+    free(sign_hex_buffer);
+
+    return result;
+}
 
 void Init_account_key() {
 
@@ -185,5 +235,6 @@ void Init_account_key() {
   rb_define_alloc_func(key_class, account_init);
   rb_define_method(key_class, "public_key", account_public_key, 0);
   rb_define_method(key_class, "export_to_text", account_export_to_text, 1);
+  rb_define_method(key_class, "sign", convex_account_sign_data, 1);
   rb_define_method(key_class, "close", account_close, 0);
 }

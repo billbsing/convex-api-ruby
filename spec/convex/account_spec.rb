@@ -1,14 +1,17 @@
 require "spec_helper"
 
 
-private_key_text = "-----BEGIN ENCRYPTED PRIVATE KEY-----\n\
+PRIVATE_KEY_TEXT = "-----BEGIN ENCRYPTED PRIVATE KEY-----\n\
 MIGbMFcGCSqGSIb3DQEFDTBKMCkGCSqGSIb3DQEFDDAcBAi3qm1zgjCO5gICCAAw\n\
 DAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEENjvj1nzc0Qy22L+Zi+n7yIEQMLW\n\
 o++Jzwlcg3PbW1Y2PxicdFHM3dBOgTWmGsvfZiLhSxTluXTNRCZ8ZLL5pi7JWtCl\n\
 JAr4iFzPLkM18YEP2ZE=\n\
 -----END ENCRYPTED PRIVATE KEY-----"
 
-public_key = "5288Fec4153b702430771DFAC8AeD0B21CAFca4344daE0d47B97F0bf532b3306"
+PUBLIC_KEY = "5288Fec4153b702430771DFAC8AeD0B21CAFca4344daE0d47B97F0bf532b3306"
+
+SIGN_HASH_TEXT = "5bb1ce718241bfec110552b86bb7cccf0d95b8a5f462fbf6dff7c48543622ba5"
+SIGNED_TEXT = "7eceffab47295be3891ea745838a99102bfaf525ec43632366c7ec3f54db4822b5d581573aecde94c420554f963baebbf412e4304ad8636886ddfa7b1049f70e"
 
 describe Convex::Account do
   describe "version number" do
@@ -42,10 +45,14 @@ describe Convex::Account do
     end
   end
 
-  describe "import a standard key text" do
-    subject { described_class.new(private_key_text, "secret")}
+  describe "import a standard key text and sign" do
+    subject { described_class.new(PRIVATE_KEY_TEXT, "secret")}
     it "should match the standard public key" do
-      expect(subject.public_key).to eq(public_key)
+      expect(subject.public_key).to eq(PUBLIC_KEY)
+    end
+    it "should sign a hash string" do
+      expect(subject.sign(SIGN_HASH_TEXT)).to eq(SIGNED_TEXT)
     end
   end
+
 end

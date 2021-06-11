@@ -25,6 +25,10 @@ class Convex::Account
       return @key.export_to_text(password)
     end
 
+    def sign(hash_hex)
+      return @key.sign(hash_hex) if @key
+    end
+
     def valid?
       return @key != false
     end
