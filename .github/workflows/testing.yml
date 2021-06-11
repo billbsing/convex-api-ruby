@@ -19,9 +19,6 @@ jobs:
       with:
         ruby-version: 3.0
 
-    - name: load depends
-      run: rake install_dependencies
-
     - name: build library
       run: rake compile
 
