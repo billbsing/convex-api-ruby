@@ -1,5 +1,6 @@
 
 lib/convex/account_key
+Gemfile.lock
 
 # Standard Ruby ignores
 
