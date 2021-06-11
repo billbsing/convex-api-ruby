@@ -6,8 +6,8 @@ rescue LoadError
 end
 
 class Convex::Account
-    VERSION = "0.0.1"
 
+    VERSION = AccountKey::VERSION
 
     def initialize(import_text=nil, password=nil)
       if import_text and password then
@@ -18,11 +18,11 @@ class Convex::Account
     end
 
     def public_key
-      return @key.public_key
+      return @key.public_key if @key
     end
 
     def export_to_text(password)
-      return @key.export_to_text(password)
+      return @key.export_to_text(password) if @key
     end
 
     def sign(hash_hex)
@@ -34,9 +34,7 @@ class Convex::Account
     end
 
     def to_s
-      if valid? then
-        return public_key
-      end
+      return public_key if valid?
       return "<empty>"
     end
 end

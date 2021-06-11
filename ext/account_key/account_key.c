@@ -3,6 +3,8 @@
 #include "convex_utils.h"
 #include "account_key.h"
 
+#define LIBRARY_VERSION "0.0.1"
+
 /**
  * @private
  *
@@ -237,4 +239,6 @@ void Init_account_key() {
   rb_define_method(key_class, "export_to_text", account_export_to_text, 1);
   rb_define_method(key_class, "sign", convex_account_sign_data, 1);
   rb_define_method(key_class, "close", account_close, 0);
+  VALUE version = rb_str_new_cstr(LIBRARY_VERSION);
+  rb_define_const(module, "VERSION", version);
 }

@@ -16,7 +16,7 @@ SIGNED_TEXT = "7eceffab47295be3891ea745838a99102bfaf525ec43632366c7ec3f54db4822b
 describe Convex::Account do
   describe "version number" do
     it "should have a version number" do
-      expect(Convex::Account::VERSION).not_to be nil
+      expect(Convex::Account::VERSION.length).to be >  2
     end
   end
 
@@ -29,10 +29,10 @@ describe Convex::Account do
       expect(subject.valid?)
     end
     it "should return a public key" do
-      expect(subject.public_key).not_to be nil
+      expect(subject.public_key.length).to equal(64)
     end
     it "should return a PEM formated text" do
-      expect(subject.export_to_text("secret")).not_to be nil
+      expect(subject.export_to_text("secret")).to include("-----BEGIN ENCRYPTED PRIVATE KEY-----")
     end
   end
 
@@ -55,4 +55,16 @@ describe Convex::Account do
     end
   end
 
+  describe "import a invalid key text" do
+    subject { described_class.new("invalid key text", "secret")}
+    it "should have no public key value" do
+      expect(subject.public_key).to be nil
+    end
+    it "should have an empty str value" do
+      expect(subject.to_s).to eq("<empty>")
+    end
+    it "should export nil text" do
+      expect(subject.export_to_text("ignore")).to be nil
+    end
+  end
 end
