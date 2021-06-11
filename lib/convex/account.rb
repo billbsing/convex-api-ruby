@@ -1,6 +1,9 @@
 # require_relative "account_lib/account_lib.so"
 
-require "convex/account_key/account_key"
+begin
+  require "convex/account_key/account_key"
+rescue LoadError
+end
 
 class Convex::Account
     VERSION = "0.0.1"
@@ -24,6 +27,13 @@ class Convex::Account
 
     def valid?
       return @key != false
+    end
+
+    def to_s
+      if valid? then
+        return public_key
+      end
+      return "<empty>"
     end
 end
 
