@@ -1,5 +1,5 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('./lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'convex'
 
@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{convex api written in ruby}
   spec.description   = %q{}
   spec.homepage      = "https://github.com/billbsing/convex-api-ruby"
-  spec.license       = "MIT"
+  spec.license       = "Apache"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
