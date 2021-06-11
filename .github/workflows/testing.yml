@@ -20,7 +20,7 @@ jobs:
         ruby-version: 3.0
 
     - name: build library
-      run: rake compile
+      run: bundle exec rake compile
 
     - name: run tests
-      run: rake spec
+      run: bundle exec rake spec
