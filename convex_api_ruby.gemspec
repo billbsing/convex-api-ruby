@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake-compiler'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'openssl'
+  spec.add_development_dependency "test-unit", "~> 3.0"
   spec.add_runtime_dependency 'http'
   spec.add_runtime_dependency 'openssl'
 end
