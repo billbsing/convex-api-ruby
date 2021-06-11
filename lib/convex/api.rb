@@ -12,13 +12,11 @@ class Convex::API
 
   def query(transaction, address=9)
     query_uri = URI(File.join(url, '/api/v1/query'))
-    puts query_uri
-    data = { 
+    data = {
       'source' => transaction,
       'address' => "##{address}",
       'lang' => "convex-lisp"
     }
-    puts data
     response = HTTP.post(query_uri, {'json'=>data})
     if response.code == 200 then
       return JSON.parse response.body

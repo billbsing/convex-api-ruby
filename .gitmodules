@@ -1,0 +1,3 @@
+[submodule "ext/convex_lib/convex-api-c"]
+	path = ext/convex_lib/convex-api-c
+	url = git@github.com:billbsing/convex-api-c.git
