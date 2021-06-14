@@ -18,11 +18,10 @@ class Convex::API
       'lang' => "convex-lisp"
     }
     response = HTTP.post(query_uri, {'json'=>data})
-    if response.code == 200 then
-      return JSON.parse response.body
+    if response.code != 200 then
+      raise Convex::RequestError(response)
     end
-    raise Convex::RequestError(response)
+    JSON.parse response.body
   end
-
 
 end

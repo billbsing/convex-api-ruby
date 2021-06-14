@@ -18,24 +18,24 @@ class Convex::Account
     end
 
     def public_key
-      return @key.public_key if @key
+      @key.public_key if @key
     end
 
     def export_to_text(password)
-      return @key.export_to_text(password) if @key
+      @key.export_to_text(password) if @key
     end
 
     def sign(hash_hex)
-      return @key.sign(hash_hex) if @key
+      @key.sign(hash_hex) if @key
     end
 
     def valid?
-      return @key != false
+      @key != false
     end
 
     def to_s
-      return public_key if valid?
-      return "<empty>"
+      public_key if valid?
+      "<empty>"
     end
 end
 
