@@ -1,6 +1,7 @@
 
 lib/convex/account_key
 Gemfile.lock
+html/
 
 # Standard Ruby ignores
 
