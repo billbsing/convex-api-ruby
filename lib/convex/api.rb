@@ -51,7 +51,7 @@ class Convex::API
       raise Convex::APIError.new(500, 'no hash value')
     end
     hash_data = prepare_data['hash']
-    account.sign(hash_data)
+    signed_data = account.sign(hash_data)
     transaction_submit(address, account.public_key, hash_data, signed_data)
   end
 
