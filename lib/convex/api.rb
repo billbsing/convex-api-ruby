@@ -19,6 +19,17 @@ class Convex::API
     result['address'].to_i
   end
 
+  def request_funds(address, amount=0)
+    amount = Convex::DEFAULT_REQUEST_FUND_AMOUNT if amount == 0
+    faucet_uri = URI(File.join(url, '/api/v1/faucet'))
+    data = {
+      'address': "##{address}",
+      'amount': amount
+    }
+    result = transaction_post(faucet_uri, data)
+    result['amount'].to_i
+  end
+
   def query(transaction, address=9)
     query_uri = URI(File.join(url, '/api/v1/query'))
     data = {
