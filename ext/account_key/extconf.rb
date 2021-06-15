@@ -7,5 +7,5 @@ if have_library("libcrypto", "CRYPTO_malloc") &&
 end
 
 create_header
-create_makefile 'crypto_key'
+create_makefile 'account_key'
 
