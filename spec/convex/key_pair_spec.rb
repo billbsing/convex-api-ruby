@@ -13,10 +13,10 @@ PUBLIC_KEY = "5288Fec4153b702430771DFAC8AeD0B21CAFca4344daE0d47B97F0bf532b3306"
 SIGN_HASH_TEXT = "5bb1ce718241bfec110552b86bb7cccf0d95b8a5f462fbf6dff7c48543622ba5"
 SIGNED_TEXT = "7eceffab47295be3891ea745838a99102bfaf525ec43632366c7ec3f54db4822b5d581573aecde94c420554f963baebbf412e4304ad8636886ddfa7b1049f70e"
 
-describe Convex::Account do
+describe Convex::KeyPair do
   describe "version number" do
     it "should have a version number" do
-      expect(Convex::Account::VERSION.length).to be >  2
+      expect(Convex::KeyPair::VERSION.length).to be >  2
     end
   end
 

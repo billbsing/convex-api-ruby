@@ -10,20 +10,21 @@ class Convex::API
     @url = url
   end
 
-  def create_account(account)
+  def create_account(key_pair)
     account_uri = URI(File.join(url, '/api/v1/createAccount'))
     data = {
-      'accountKey': account.public_key
+      'accountKey': key_pair.public_key
     }
     result = transaction_post(account_uri, data)
-    result['address'].to_i
+    address = result['address'].to_i
+    return Convex::Account.new(key_pair, address)
   end
 
-  def request_funds(address, amount=0)
+  def request_funds(account, amount=0)
     amount = Convex::DEFAULT_REQUEST_FUND_AMOUNT if amount == 0
     faucet_uri = URI(File.join(url, '/api/v1/faucet'))
     data = {
-      'address': "##{address}",
+      'address': "##{account.address}",
       'amount': amount
     }
     result = transaction_post(faucet_uri, data)
@@ -45,14 +46,20 @@ class Convex::API
     transaction_get(info_uri)
   end
 
-  def submit(transaction, address, account)
-    prepare_data = transaction_prepare(transaction, address)
+  def submit(transaction, account)
+    prepare_data = transaction_prepare(transaction, account.address)
     unless prepare_data.has_key?('hash') then
       raise Convex::APIError.new(500, 'no hash value')
     end
     hash_data = prepare_data['hash']
     signed_data = account.sign(hash_data)
-    transaction_submit(address, account.public_key, hash_data, signed_data)
+    transaction_submit(account.address, account.public_key, hash_data, signed_data)
+  end
+
+  def transfer(from_account, to_address, amount)
+    transaction = "(transfer ##{to_address} #{amount})"
+    result = submit(transaction, from_account)
+    result['value'] if result.has_key?('value')
   end
 
   protected def transaction_prepare(transaction, address, sequence_number=nil)

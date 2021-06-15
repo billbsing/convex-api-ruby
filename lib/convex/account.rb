@@ -1,41 +1,21 @@
 # require_relative "account_lib/account_lib.so"
 
-begin
-  require "convex/account_key/account_key"
-rescue LoadError
-end
 
 class Convex::Account
 
-    VERSION = AccountKey::VERSION
+    attr_reader :address, :key_pair
+    def initialize(key_pair, address)
+      @address = address
+      @key_pair = key_pair
+    end
 
-    def initialize(import_text=nil, password=nil)
-      if import_text and password then
-        @key = AccountKey::create_from_text(import_text, password)
-      else
-        @key = AccountKey::create
-      end
+    def sign(hash_data)
+      @key_pair.sign(hash_data)
     end
 
     def public_key
-      @key.public_key if @key
+      @key_pair.public_key
     end
 
-    def export_to_text(password)
-      @key.export_to_text(password) if @key
-    end
-
-    def sign(hash_hex)
-      @key.sign(hash_hex) if @key
-    end
-
-    def valid?
-      @key != false
-    end
-
-    def to_s
-      public_key if valid?
-      "<empty>"
-    end
 end
 

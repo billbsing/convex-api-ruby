@@ -1,6 +1,6 @@
 
-#ifndef CONVEX_ACCOUNT_H
-#define CONVEX_ACCOUNT_H
+#ifndef ACCOUNT_KEY_H
+#define ACCOUNT_KEY_H
 
 #include <stdbool.h>
 #include <openssl/evp.h>
@@ -19,4 +19,4 @@ typedef struct {
 typedef convex_account_t* convex_account_p;
 
 
-#endif          // CONVEX_ACCOUNT_H
+#endif          // ACCOUNT_KEY_H
