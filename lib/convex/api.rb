@@ -40,6 +40,11 @@ class Convex::API
     transaction_post(query_uri, data)
   end
 
+  def get_account_info(address)
+    info_uri =  URI(File.join(url, "/api/v1/accounts/#{address}"))
+    transaction_get(info_uri)
+  end
+
   def submit(transaction, address, account)
     prepare_data = transaction_prepare(transaction, address)
     unless prepare_data.has_key?('hash') then
@@ -76,6 +81,18 @@ class Convex::API
 
   protected def transaction_post(uri, data)
     response = HTTP.post(uri, {'json'=>data})
+    if response.code != 200 then
+      raise Convex::APIError.new(response.code, response.body)
+    end
+    result = JSON.parse response.body
+    if result.has_key?('errorCode') then
+      raise Convex::APIError.new(result['errorCode'], result['value'])
+    end
+    result
+  end
+
+  protected def transaction_get(uri)
+    response = HTTP.get(uri)
     if response.code != 200 then
       raise Convex::APIError.new(response.code, response.body)
     end
