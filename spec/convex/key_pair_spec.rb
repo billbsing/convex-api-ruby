@@ -42,6 +42,7 @@ describe Convex::KeyPair do
     let (:import_account) {described_class::new(import_text=export_text, password="secret")}
     it "should match the imported keys" do
       expect(subject.public_key).to eq(import_account.public_key)
+      expect(subject.eql?(import_account))
     end
   end
 
