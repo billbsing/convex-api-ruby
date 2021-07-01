@@ -1,5 +1,7 @@
 # convex-api-ruby
 
+See the (API Documentation)[https://billbsing.github.io/convex-api-ruby/]
+
 
 ## Build and test this library
 
@@ -24,4 +26,5 @@ Finally run the tests
 You need to run rdoc..
 
     rake rdoc
+
 
