@@ -18,3 +18,10 @@ Then compile the c library that is used by this library
 Finally run the tests
 
     rake spec
+
+## Rebuild the documentation
+
+You need to run rdoc..
+
+    rake rdoc
+

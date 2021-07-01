@@ -2,7 +2,7 @@
 Gem::Specification.new do |spec|
   spec.name          = "convex"
   spec.version       = "0.0.1"
-  spec.authors       = ["Billbsing"]
+  spec.authors       = ["billbsing"]
   spec.email         = ["billbsing@gmail.com"]
 
   spec.summary       = %q{convex api written in ruby}
