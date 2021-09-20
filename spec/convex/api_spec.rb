@@ -61,7 +61,7 @@ describe Convex::API do
       end
     end
     context 'after transfer an amount' do
-    let(:transfer_to_address) { 9 }
+    let(:transfer_to_address) { 11 }
     let(:transfer_amount) { 10000 }
       it 'should return the amount transfered' do
         amount = subject.request_funds(@account)

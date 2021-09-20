@@ -95,7 +95,7 @@ class Convex::API
   #   amount = convex.query('*balance*', account.address)
   #   puts "My account has #{amount} coins"
   #
-  def query(transaction, address=9)
+  def query(transaction, address=11)
     query_uri = URI(File.join(url, '/api/v1/query'))
     data = {
       'source' => transaction,
